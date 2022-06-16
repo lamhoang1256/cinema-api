@@ -31,9 +31,7 @@ const removeFile = async (path) => {
 
     if (process.env.NODE_ENV === "production") {
       const public_id =
-        (process.env.CLOUDINARY_FOLDER_NAME
-          ? process.env.CLOUDINARY_FOLDER_NAME + "/"
-          : "") +
+        (process.env.CLOUDINARY_FOLDER_NAME ? process.env.CLOUDINARY_FOLDER_NAME + "/" : "") +
         path.split("/").reverse()[0].split(".").slice(0, -1).join(".");
 
       await cloudinary.uploader.destroy(public_id, function (err, result) {
