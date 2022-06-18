@@ -21,12 +21,7 @@ const screenRouter = express.Router();
 
 screenRouter.post(
   "/",
-  [
-    authenticate,
-    authorize("admin"),
-    validateCreateScreenSchema(),
-    catchRequestError,
-  ],
+  [authenticate, authorize("admin"), validateCreateScreenSchema(), catchRequestError],
   async (req, res, next) => {
     const { name, cinemaId } = req.body;
 
@@ -36,17 +31,14 @@ screenRouter.post(
         throw new ApiError(400, "Cinema does not exist");
       }
 
-      const isScreenExist = await checkScreenExistsInCinemaByName(
-        name,
-        cinemaId
-      );
+      const isScreenExist = await checkScreenExistsInCinemaByName(name, cinemaId);
       if (isScreenExist) {
         throw new ApiError(400, "Screen name already exists in the Cinema");
       }
 
       // generate seat template to add into the screen
       const seatsTemplate = [];
-      const seatRows = ["A", "B", "C", "D", "E"];
+      const seatRows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
       const seatColumns = 12;
       for (const seatRow of seatRows) {
         for (let i = 1; i <= seatColumns; i++) {
@@ -98,27 +90,23 @@ screenRouter.get("/all", async (req, res, next) => {
   }
 });
 
-screenRouter.get(
-  "/",
-  [validatePagingQueries(), catchRequestError],
-  async (req, res, next) => {
-    const { page, limit } = req.query;
+screenRouter.get("/", [validatePagingQueries(), catchRequestError], async (req, res, next) => {
+  const { page, limit } = req.query;
 
-    try {
-      const data = await getScreensWithPagination(page, limit);
-      if (!data) {
-        throw new ApiError(500, "An error occurred while fetching the screens");
-      }
-
-      res.json({
-        status: "success",
-        data,
-      });
-    } catch (error) {
-      next(error);
+  try {
+    const data = await getScreensWithPagination(page, limit);
+    if (!data) {
+      throw new ApiError(500, "An error occurred while fetching the screens");
     }
+
+    res.json({
+      status: "success",
+      data,
+    });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 screenRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -142,12 +130,7 @@ screenRouter.get("/:id", async (req, res, next) => {
 
 screenRouter.put(
   "/:id",
-  [
-    authenticate,
-    authorize("admin"),
-    validateUpdateScreenSchema(),
-    catchRequestError,
-  ],
+  [authenticate, authorize("admin"), validateUpdateScreenSchema(), catchRequestError],
   async (req, res, next) => {
     const { id } = req.params;
     const updates = {
@@ -172,15 +155,9 @@ screenRouter.put(
         }
       });
 
-      const isScreenExist = await checkScreenExistsInCinemaByName(
-        updates.name,
-        updates.cinemaId
-      );
+      const isScreenExist = await checkScreenExistsInCinemaByName(updates.name, updates.cinemaId);
       if (isScreenExist) {
-        throw new ApiError(
-          400,
-          "The next updated screen name already exists in the Cinema"
-        );
+        throw new ApiError(400, "The next updated screen name already exists in the Cinema");
       }
 
       const isUpdated = await updateScreen(updates, id);
@@ -202,39 +179,32 @@ screenRouter.put(
   }
 );
 
-screenRouter.delete(
-  "/:id",
-  [authenticate, authorize("admin")],
-  async (req, res, next) => {
-    const { id } = req.params;
+screenRouter.delete("/:id", [authenticate, authorize("admin")], async (req, res, next) => {
+  const { id } = req.params;
 
-    try {
-      const screen = await getScreenById(id);
-      if (!screen) {
-        throw new ApiError(404, "Screen does not exist");
-      }
-
-      const numOfShowtimes = await screen.countShowtimes();
-      if (numOfShowtimes > 0) {
-        throw new ApiError(
-          400,
-          "Please delete the showtimes belonging to this screen first"
-        );
-      }
-
-      const isDeleted = await deleteScreenById(id);
-      if (!isDeleted) {
-        throw new ApiError(500, "An error occurred while deleting the screen");
-      }
-
-      res.json({
-        status: "success",
-        message: "Screen deleted successfully",
-      });
-    } catch (error) {
-      next(error);
+  try {
+    const screen = await getScreenById(id);
+    if (!screen) {
+      throw new ApiError(404, "Screen does not exist");
     }
+
+    const numOfShowtimes = await screen.countShowtimes();
+    if (numOfShowtimes > 0) {
+      throw new ApiError(400, "Please delete the showtimes belonging to this screen first");
+    }
+
+    const isDeleted = await deleteScreenById(id);
+    if (!isDeleted) {
+      throw new ApiError(500, "An error occurred while deleting the screen");
+    }
+
+    res.json({
+      status: "success",
+      message: "Screen deleted successfully",
+    });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 module.exports = screenRouter;
