@@ -11,6 +11,10 @@ module.exports = {
         example:
           "Doraemon: Nobita và Cuộc Chiến Vũ Trụ Tí Hon 2021 là một lựa chọn cực kỳ sáng suốt trong dịp Tết Thiếu Nhi 2022 sắp đến. Một bom tấn đúng nghĩa dành cho tất cả mọi người, từ già trẻ lớn bé...",
       },
+      tmdbId: {
+        type: "string",
+        example: "453395",
+      },
       poster: {
         type: "string",
         format: "binary",

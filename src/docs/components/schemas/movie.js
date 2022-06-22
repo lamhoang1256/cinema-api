@@ -10,6 +10,10 @@ module.exports = {
         type: "string",
         example: "DOCTOR STRANGE IN THE MULTIVERSE OF MADNESS",
       },
+      tmdbId: {
+        type: "string",
+        example: "453395",
+      },
       description: {
         type: "string",
         example:
@@ -17,8 +21,7 @@ module.exports = {
       },
       poster: {
         type: "string",
-        example:
-          "http://localhost:8080/public/default/images/movies/doctor-strange.jpeg",
+        example: "http://localhost:8080/public/default/images/movies/doctor-strange.jpeg",
       },
       trailer: {
         type: "string",
