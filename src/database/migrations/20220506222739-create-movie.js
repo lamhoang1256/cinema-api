@@ -15,6 +15,9 @@ module.exports = {
       description: {
         type: Sequelize.TEXT,
       },
+      tmdbId: {
+        type: Sequelize.STRING,
+      },
       poster: {
         type: Sequelize.STRING,
       },

@@ -9,6 +9,7 @@ const validateCreateMovieSchema = () => {
   return [
     body("name").trim().notEmpty().withMessage("Movie name is required"),
     body("description").optional({ nullable: true }).trim(),
+    body("tmdbId").optional({ nullable: true }).trim(),
     body("poster")
       .optional({ nullable: true })
       .trim()
@@ -52,6 +53,7 @@ const validateUpdateMovieSchema = () => {
       .notEmpty()
       .withMessage("Movie name is required"),
     body("description").optional({ nullable: true }).trim(),
+    body("tmdbId").optional({ nullable: true }).trim(),
     body("poster")
       .optional({ nullable: true })
       .trim()
