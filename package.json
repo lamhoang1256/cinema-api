@@ -1,9 +1,9 @@
 {
-  "name": "nodejs20-express-movie",
+  "name": "easy-cinema-booking",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/dothanhtien/nodejs20-express-movie.git",
-  "author": "Tien Do Thanh <dothanhtien95@gmail.com>",
+  "repository": "https://github.com/lamhoang1256/easy-cinema-booking-api",
+  "author": "Nguyen Hoang Lam <lamhoang1256@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.js",
