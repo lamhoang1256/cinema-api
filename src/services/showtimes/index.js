@@ -1,14 +1,7 @@
 "use strict";
 const { body } = require("express-validator");
 const { Op } = require("sequelize");
-const {
-  Showtime,
-  CinemaComplex,
-  Cinema,
-  Screen,
-  Movie,
-  Ticket,
-} = require("../../database/models");
+const { Showtime, CinemaComplex, Cinema, Screen, Movie, Ticket } = require("../../database/models");
 const ApiError = require("../../utils/apiError");
 const { getPagination, getPagingData } = require("../pagination");
 
@@ -24,11 +17,7 @@ const validateCreateShowtimeSchema = () => {
       .withMessage("screenId is required")
       .isInt()
       .withMessage("screenId is invalid"),
-    body("price")
-      .optional({ nullable: true })
-      .isInt()
-      .withMessage("Price is invalid")
-      .toInt(),
+    body("price").optional({ nullable: true }).isInt().withMessage("Price is invalid").toInt(),
   ];
 };
 
@@ -46,11 +35,7 @@ const validateUpdateShowtimeSchema = () => {
       .withMessage("screenId is required")
       .isInt()
       .withMessage("screenId is invalid"),
-    body("price")
-      .optional({ nullable: true })
-      .isInt()
-      .withMessage("Price is invalid")
-      .toInt(),
+    body("price").optional({ nullable: true }).isInt().withMessage("Price is invalid").toInt(),
   ];
 };
 
