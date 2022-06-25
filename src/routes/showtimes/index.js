@@ -26,12 +26,7 @@ const showtimeRouter = express.Router();
 
 showtimeRouter.post(
   "/",
-  [
-    authenticate,
-    authorize("admin"),
-    validateCreateShowtimeSchema(),
-    catchRequestError,
-  ],
+  [authenticate, authorize("admin"), validateCreateShowtimeSchema(), catchRequestError],
   async (req, res, next) => {
     let { movieId, screenId, startTime, price } = req.body;
 
@@ -54,21 +49,18 @@ showtimeRouter.post(
       endTime.setMinutes(endTime.getMinutes() + movie.duration);
 
       // check if do not have any schedule in the screen between startTime and endTime
-      const isScreenAvailable = await checkScreenAvailable(
-        screenId,
-        startTime,
-        endTime
-      );
+      const isScreenAvailable = await checkScreenAvailable(screenId, startTime, endTime);
       if (!isScreenAvailable) {
         throw new ApiError(400, "Screen is not available during this time");
       }
 
       const seats = await getSeatsByScreenId(screenId);
-      const tickets = seats.map((seat) => {
+      const tickets = seats.map((seat, index) => {
         return {
           price,
           status: false,
           seatId: seat.id,
+          display: index,
         };
       });
 
@@ -81,10 +73,7 @@ showtimeRouter.post(
       });
 
       if (!showtime) {
-        throw new ApiError(
-          500,
-          "An error occurred while creating the showtime"
-        );
+        throw new ApiError(500, "An error occurred while creating the showtime");
       }
 
       await showtime.reload();
@@ -120,31 +109,24 @@ showtimeRouter.get("/all", async (req, res, next) => {
   }
 });
 
-showtimeRouter.get(
-  "/",
-  [validatePagingQueries(), catchRequestError],
-  async (req, res, next) => {
-    const { page, limit } = req.query;
+showtimeRouter.get("/", [validatePagingQueries(), catchRequestError], async (req, res, next) => {
+  const { page, limit } = req.query;
 
-    try {
-      const data = await getShowtimesWithPagination(page, limit);
+  try {
+    const data = await getShowtimesWithPagination(page, limit);
 
-      if (!data) {
-        throw new ApiError(
-          500,
-          "An error occurred while fetching the showtimes"
-        );
-      }
-
-      res.json({
-        status: "success",
-        data,
-      });
-    } catch (error) {
-      next(error);
+    if (!data) {
+      throw new ApiError(500, "An error occurred while fetching the showtimes");
     }
+
+    res.json({
+      status: "success",
+      data,
+    });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 showtimeRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -169,12 +151,7 @@ showtimeRouter.get("/:id", async (req, res, next) => {
 
 showtimeRouter.put(
   "/:id",
-  [
-    authenticate,
-    authorize("admin"),
-    validateUpdateShowtimeSchema(),
-    catchRequestError,
-  ],
+  [authenticate, authorize("admin"), validateUpdateShowtimeSchema(), catchRequestError],
   async (req, res, next) => {
     const { id } = req.params;
     const { movieId, screenId, startTime, price } = req.body;
@@ -203,8 +180,7 @@ showtimeRouter.put(
       // calculate endTime based on startTime and duration of the movie
       const endTime = new Date(startTime ? startTime : showtime.startTime);
       endTime.setMinutes(
-        endTime.getMinutes() +
-          (movieId ? movie.duration : showtime.movie.duration)
+        endTime.getMinutes() + (movieId ? movie.duration : showtime.movie.duration)
       );
 
       // check if do not have any schedule in the screen between startTime and endTime
@@ -219,27 +195,15 @@ showtimeRouter.put(
       }
 
       if (price) {
-        const priceOfTicketsUpdated = updatePriceOfTicketsByShowtimeId(
-          price,
-          id
-        );
+        const priceOfTicketsUpdated = updatePriceOfTicketsByShowtimeId(price, id);
         if (!priceOfTicketsUpdated) {
-          throw new ApiError(
-            500,
-            "An error occurred while updating the tickets"
-          );
+          throw new ApiError(500, "An error occurred while updating the tickets");
         }
       }
 
-      const isUpdated = await updateShowtime(
-        { movieId, screenId, startTime, endTime },
-        id
-      );
+      const isUpdated = await updateShowtime({ movieId, screenId, startTime, endTime }, id);
       if (!isUpdated) {
-        throw new ApiError(
-          500,
-          "An error occurred while updating the showtime"
-        );
+        throw new ApiError(500, "An error occurred while updating the showtime");
       }
 
       await showtime.reload();
@@ -254,47 +218,38 @@ showtimeRouter.put(
   }
 );
 
-showtimeRouter.delete(
-  "/:id",
-  [authenticate, authorize("admin")],
-  async (req, res, next) => {
-    const { id } = req.params;
+showtimeRouter.delete("/:id", [authenticate, authorize("admin")], async (req, res, next) => {
+  const { id } = req.params;
 
-    try {
-      const showtime = await getShowtimeById(id);
-      if (!showtime) {
-        throw new ApiError(404, "Showtime does not exist");
-      }
-
-      const ticketsOfShowtime = await showtime.getTickets();
-
-      const ticketListAvailable = ticketsOfShowtime.every(
-        (ticket) => !ticket.status
-      );
-
-      if (!ticketListAvailable) {
-        throw new ApiError(
-          400,
-          "The tickets of this showtime are already booked. This showtime cannot be deleted"
-        );
-      }
-
-      const isDeleted = await deleteShowtimeById(id);
-      if (!isDeleted) {
-        throw new ApiError(
-          500,
-          "An error occurred while deleting the showtime"
-        );
-      }
-
-      res.json({
-        status: "success",
-        message: "Showtime deleted successfully",
-      });
-    } catch (error) {
-      next(error);
+  try {
+    const showtime = await getShowtimeById(id);
+    if (!showtime) {
+      throw new ApiError(404, "Showtime does not exist");
     }
+
+    const ticketsOfShowtime = await showtime.getTickets();
+
+    const ticketListAvailable = ticketsOfShowtime.every((ticket) => !ticket.status);
+
+    if (!ticketListAvailable) {
+      throw new ApiError(
+        400,
+        "The tickets of this showtime are already booked. This showtime cannot be deleted"
+      );
+    }
+
+    const isDeleted = await deleteShowtimeById(id);
+    if (!isDeleted) {
+      throw new ApiError(500, "An error occurred while deleting the showtime");
+    }
+
+    res.json({
+      status: "success",
+      message: "Showtime deleted successfully",
+    });
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 module.exports = showtimeRouter;
