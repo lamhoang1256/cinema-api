@@ -44,7 +44,6 @@ screenRouter.post(
         for (let i = 1; i <= seatColumns; i++) {
           const seat = {
             name: seatRow + i,
-            display: i,
           };
           seatsTemplate.push(seat);
         }
