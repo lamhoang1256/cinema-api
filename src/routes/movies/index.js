@@ -30,7 +30,7 @@ movieRouter.post(
     catchRequestError,
   ],
   async (req, res, next) => {
-    let { name, description, trailer, rating, duration, status, releaseDate, tmdbId } = req.body;
+    let { name, description, trailer, rating, duration, status, releaseDate } = req.body;
 
     if (!releaseDate) {
       releaseDate = null;
@@ -48,7 +48,6 @@ movieRouter.post(
         duration,
         status,
         releaseDate,
-        tmdbId,
       });
 
       if (!movie) {
@@ -151,7 +150,6 @@ movieRouter.put(
       duration: req.body.duration,
       status: req.body.status,
       releaseDate: req.body.releaseDate,
-      tmdbId: req.body.tmdbId,
     };
 
     try {
