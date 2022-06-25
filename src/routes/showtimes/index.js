@@ -55,12 +55,11 @@ showtimeRouter.post(
       }
 
       const seats = await getSeatsByScreenId(screenId);
-      const tickets = seats.map((seat, index) => {
+      const tickets = seats.map((seat) => {
         return {
           price,
           status: false,
           seatId: seat.id,
-          display: index,
         };
       });
 
