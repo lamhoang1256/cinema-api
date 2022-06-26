@@ -5,10 +5,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const cinemas = await getCinemas();
     const screens = [];
+    let accumulation = 0;
     cinemas.forEach((cinema) => {
       for (let i = 1; i <= 2; i++) {
+        accumulation++;
         screens.push({
-          name: `Screen ${i}`,
+          name: `Rạp ${accumulation}`,
           cinemaId: cinema.id,
           createdAt: new Date(),
           updatedAt: new Date(),
