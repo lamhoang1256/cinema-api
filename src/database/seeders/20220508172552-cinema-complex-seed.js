@@ -57,3 +57,4 @@ module.exports = {
     await queryInterface.bulkDelete("CinemaComplexes", {}, {});
   },
 };
+//npx sequelize db:seed 20220508172552-cinema-complex-seed

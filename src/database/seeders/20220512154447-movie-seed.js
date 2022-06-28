@@ -397,3 +397,4 @@ module.exports = {
     await queryInterface.bulkDelete("Movies", null, {});
   },
 };
+//npx sequelize db:seed 20220512154447-movie-seed

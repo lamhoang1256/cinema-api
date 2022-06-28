@@ -444,3 +444,4 @@ module.exports = {
     await queryInterface.bulkDelete("Users", null, {});
   },
 };
+//npx sequelize db:seed 20220504172732-user-seed

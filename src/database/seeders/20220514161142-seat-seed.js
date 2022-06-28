@@ -34,3 +34,4 @@ module.exports = {
     await queryInterface.bulkDelete("Seats", null, {});
   },
 };
+//npx sequelize db:seed --seed 20220514161142-seat-seed

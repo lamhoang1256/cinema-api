@@ -260,3 +260,4 @@ module.exports = {
     await queryInterface.bulkDelete("Cinemas", null, {});
   },
 };
+//npx sequelize db:seed 20220510142304-cinema-seed

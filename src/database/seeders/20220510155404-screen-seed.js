@@ -25,3 +25,4 @@ module.exports = {
     await queryInterface.bulkDelete("Screens", null, {});
   },
 };
+//npx sequelize db:seed 20220510155404-screen-seed
