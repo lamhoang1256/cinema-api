@@ -93,3 +93,4 @@ module.exports = {
   },
 };
 //npx sequelize db:seed --seed 20220627135013-showtime-seed
+//npx sequelize-cli db:seed:undo --seed 20220627135013-showtime-seed

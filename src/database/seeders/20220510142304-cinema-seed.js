@@ -70,7 +70,7 @@ module.exports = {
 
     const bhdCinemaComplex = await CinemaComplex.findOne({
       where: {
-        name: "BHD Star Cineplex",
+        name: "BHD Star",
       },
     });
 
@@ -115,7 +115,7 @@ module.exports = {
 
     const galaxyCinemaComplex = await CinemaComplex.findOne({
       where: {
-        name: "Galaxy Cinema",
+        name: "Galaxy",
       },
     });
 
@@ -137,7 +137,7 @@ module.exports = {
 
     const lotteCinemaComplex = await CinemaComplex.findOne({
       where: {
-        name: "Lotte Cinema",
+        name: "Lotte",
       },
     });
 
@@ -162,17 +162,6 @@ module.exports = {
           rating: 4.2,
           description:
             "Lịch chiếu phim Lotte Nowzone- rạp Lotte toàn quốc đầy đủ & tiện lợi nhất. Rạp Lotte Nowzone nằm ở TTTM Nowzone, được xây dựng với tiêu chuẩn rạp Hollywood, chuẩn âm thanh Dolby 7.1, màn hình lớn, sắc nét.",
-          cinemaComplexId: lotteCinemaComplex.id,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          name: "Lotte Cantavil",
-          address: "Tầng 7, Cantavil Premier, Xa lộ Hà Nội, P. n Phú, Q.2, TP. Hồ Chí Minh",
-          phoneNumber: "19892731",
-          rating: 3.9,
-          description:
-            "Lịch chiếu phim Lotte Cantavil - rạp Lotte toàn quốc đầy đủ & tiện lợi nhất. Rạp Lotte Cantavil nằm ở Cantavil Premier, được xây dựng với tiêu chuẩn rạp Hollywood, chuẩn âm thanh Dolby 7.1",
           cinemaComplexId: lotteCinemaComplex.id,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -215,7 +204,7 @@ module.exports = {
 
     const megaGsCinemaComplex = await CinemaComplex.findOne({
       where: {
-        name: "Mega GS",
+        name: "Mega",
       },
     });
 
@@ -260,4 +249,4 @@ module.exports = {
     await queryInterface.bulkDelete("Cinemas", null, {});
   },
 };
-//npx sequelize db:seed 20220510142304-cinema-seed
+//npx sequelize db:seed --seed 20220510142304-cinema-seed
