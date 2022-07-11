@@ -71,4 +71,4 @@ CLOUDINARY_FOLDER_NAME="omtbs"
 ```
 
 ## Screenshots
-![swagger](https://user-images.githubusercontent.com/61537853/178253747-bde26c7e-2f78-42c1-9e55-ec547aad9cbf.png)
+![swagger](https://user-images.githubusercontent.com/61537853/178254017-1b4f5b48-dcc7-4c13-901f-b32eb457a4c6.png)
