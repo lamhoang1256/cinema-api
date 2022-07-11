@@ -1,8 +1,19 @@
 # Online Movie Ticket Booking System
 
+This is the api of the [Easy Booking Cinema](https://github.com/lamhoang1256/easy-cinema-booking) project
+
+## Swagger
+```
+Api docs: https://easy-cinema-booking-api.herokuapp.com/api-docs
+```
+
+## Author
+- Đỗ Tiến Thành ( [@dothanhtien](https://github.com/dothanhtien) ) (Creator)
+- Nguyễn Hoàng Lâm ( [@lamhoang1256](https://github.com/lamhoang1256) ) (Update and improve)
+
 ## I. Installation
 
-1. Clone or download from github: `https://github.com/dothanhtien/nodejs20-express-movie.git`
+1. Clone or download from github: `https://github.com/lamhoang1256/easy-cinema-booking-api`
 2. Add `.env` file in the root folder
 3. Copy `.env file content` in the section II to your `.env` file
 4. To install packages => Run command: `yarn`
@@ -58,3 +69,6 @@ CLOUDINARY_API_KEY="api_key"
 CLOUDINARY_API_SECRET="api_secret"
 CLOUDINARY_FOLDER_NAME="omtbs"
 ```
+
+## Screenshots
+![swagger](https://user-images.githubusercontent.com/61537853/178253747-bde26c7e-2f78-42c1-9e55-ec547aad9cbf.png)
