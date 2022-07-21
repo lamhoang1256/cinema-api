@@ -3,9 +3,9 @@
 This is the api of the [Easy Booking Cinema](https://github.com/lamhoang1256/easy-cinema-booking) project
 
 ## Swagger
-```
+
 Api docs: https://easy-cinema-booking-api.herokuapp.com/api-docs
-```
+
 
 ## Author
 - Đỗ Tiến Thành ( [@dothanhtien](https://github.com/dothanhtien) ) (Creator)
